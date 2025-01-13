@@ -1,93 +1,43 @@
-from shlex import split as argparse
-from TaskTracker import *
+import json
+from datetime import datetime
+from TaskTracker import TaskTracker, Task
+from Commands import runCommand
 
 
 
 def main():
+    filename: str = getFilename()
+
     tracker: TaskTracker = TaskTracker()
-    userInput: str = input()
-    while completeCommand(userInput, tracker):
+    userInput = input()
+    while runCommand(userInput, tracker):
         userInput = input()
 
+    JSONWrite(filename, tracker)
+    print(f"Current tasks saved to JSON file '{filename}'. Goodbye.")
 
 
-def completeCommand(userInput: str, tracker: TaskTracker) -> bool:
-    command: list[str] = argparse(userInput)
-    if len(command) < 1:
-        return False
-    
-    match command[0]:
-        case "add":
-            add(command, tracker)
-        case "update":
-            update(command, tracker)
-        case "delete":
-            delete(command, tracker)
-        case "list":
-            listTasks(command, tracker)
-        case  "mark-in-progress":
-            markProgress(command, tracker)
-        case  "mark-done":
-            markDone(command, tracker)
-        case _:
-            error(command)
-    return True
+def getFilename() -> str:
+    userInput: str = input("Enter name for JSON file: ")
+    while not userInput.isalnum():
+        userInput = input("Enter name for JSON file: ")
+    return userInput + ".json"
 
 
-def add(command: list[str], tracker: TaskTracker) -> None:
-    if len(command) != 2:
-        return
-    
-    taskID = tracker.add(command[1])
-    print(f"Task added successfully (ID: {taskID})")
+def JSONWrite(filename: str, tracker: TaskTracker) -> None:
+    tasks_dict: dict[int: dict] = {}
 
-def update(command: list[str], tracker: TaskTracker) -> None:
-    if len(command) != 3:
-        return
-    if not command[1].isdigit():
-        return
-    
-    tracker.update(int(command[1]), command[2])
+    for taskID in tracker.tasks:
+        task: Task = tracker.tasks[taskID]
+        tasks_dict[taskID] = {"description": task.description, "status": task.status, "createdAt": task.createdAt, "updatedAt": task.updatedAt}
 
-def delete(command: list[str], tracker: TaskTracker) -> None:
-    if len(command) != 2:
-        return
-    if not command[1].isdigit():
-        return
-    
-    tracker.delete(int(command[1]))
+    tasks_object = json.dumps(tasks_dict, default=serialize)
+    with open(filename, "w") as file:
+        file.write(tasks_object)
 
-
-def markProgress(command: list[str], tracker: TaskTracker) -> None:
-    if len(command) != 2:
-        return
-    if not command[1].isdigit():
-        return
-    
-    tracker.markStatus(int(command[1]), "in-progress")
-
-def markDone(command: list[str], tracker: TaskTracker) -> None:
-    if len(command) != 2:
-        return
-    if not command[1].isdigit():
-        return
-    
-    tracker.markStatus(int(command[1]), "done")
-
-
-def listTasks(command: list[str], tracker: TaskTracker) -> None:
-    if len(command) == 1:
-        print(tracker.listTasks())
-    elif len(command) == 2:
-        if command[1] in {"todo", "in-progress", "done"}:
-            print(tracker.listTasks(command[1]))
-        else:
-            pass
-    else:
-        return
-
-def error(command: list[str]) -> None:
-    pass
+def serialize(object: object):
+    if isinstance(object, datetime):
+        return object.isoformat()
 
 
 
