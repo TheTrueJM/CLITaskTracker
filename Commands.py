@@ -46,7 +46,9 @@ def update(command: list[str], tracker: TaskTracker) -> None:
         return
     
     success: bool = tracker.update(int(command[1]), command[2])
-    if not success:
+    if success:
+        print(f"Task {command[1]} description successfully updated")
+    else:
         error(f"TaskID {command[1]} does not exist")
 
 # Delete a task from the tracker
@@ -56,7 +58,9 @@ def delete(command: list[str], tracker: TaskTracker) -> None:
         return
     
     success: bool = tracker.delete(int(command[1]))
-    if not success:
+    if success:
+        print(f"Task {command[1]} successfully deleted")
+    else:
         error(f"TaskID {command[1]} does not exist")
 
 
@@ -67,7 +71,9 @@ def markProgress(command: list[str], tracker: TaskTracker) -> None:
         return
     
     success: bool = tracker.markStatus(int(command[1]), "in-progress")
-    if not success:
+    if success:
+        print(f"Task {command[1]} successfully marked as 'in-progress'")
+    else:
         error(f"TaskID {command[1]} does not exist")
 
 # Mark a tracked task's status as 'done'
@@ -77,7 +83,9 @@ def markDone(command: list[str], tracker: TaskTracker) -> None:
         return
     
     success: bool = tracker.markStatus(int(command[1]), "done")
-    if not success:
+    if success:
+        print(f"Task {command[1]} successfully marked as 'done'")
+    else:
         error(f"TaskID {command[1]} does not exist")
 
 
