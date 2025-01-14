@@ -1,6 +1,8 @@
 # CLI Task Tracker
-A solution to the [Task-Tracker](https://roadmap.sh/projects/task-tracker) project available on [roadmap.sh](https://roadmap.sh). <br>
-(explaination)
+A solution to the [Task-Tracker](https://roadmap.sh/projects/task-tracker) project available on [roadmap.sh](https://roadmap.sh).
+
+This project is a simple command-line interface (CLI) application that allows users to manage and track tasks. Task management includes adding, updating, deleting, and listing features and commands. When exiting the application, the tasks will be saved to a JSON file specified by the user.
+
 ## Features
 - **Add Task:** Create a new task to be tracked
 - **Update Task Description:** Updates the description of a task
@@ -8,12 +10,14 @@ A solution to the [Task-Tracker](https://roadmap.sh/projects/task-tracker) proje
 - **Delete Task:** Delete a task from the tracker
 - **Listing Tasks:** Display a list of all tasks or tasks matching a status
 - **JSON File Saving:** The tracked tasked will be saved to a specified JSON file
+
 ## Installation
 ```
 git clone https://github.com/TheTrueJM/CLITaskTracker.git
 cd CLITaskTracker
 py ./main.py
 ```
+
 ## Usage
 ```
 # Add new task
@@ -22,15 +26,19 @@ add "Buy groceries"
 
 # Update task description
 update 1 "Buy groceries and cook dinner"
+# Output: Task 1 description successfully updated
 
 # Mark task as in progress
 mark-in-progress 1
+# Output: Task 1 successfully marked as 'in-progress'
 
 # Mark task as done
-mark-done
+mark-done 1
+# Output: Task 1 successfully marked as 'done'
 
 # Delete task
 delete 1
+# Output: Task 1 successfully deleted
 
 # List all tasks
 list
@@ -39,7 +47,12 @@ list
 list todo
 list in-progress
 list done
+
+# Exit application and save JSON file
+
+# (Enter Nothing)
 ```
+
 ## Sample JSON Output
 ```json
 {
