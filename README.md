@@ -1,7 +1,7 @@
 # CLI Task Tracker
 A solution to the [Task-Tracker](https://roadmap.sh/projects/task-tracker) project available on [roadmap.sh](https://roadmap.sh).
 
-This project is a simple command-line interface (CLI) application that allows users to manage and track tasks. Task management includes adding, updating, deleting, and listing features and commands. When exiting the application, the tasks will be saved to a JSON file specified by the user.
+This project is a simple command-line interface (CLI) application that allows users to manage and track tasks. Task management features adding, updating, deleting, and listing commands. When exiting the application, the currently tracked tasks will be saved to a JSON output file specified by the user.
 
 ## Features
 - **Add Task:** Create a new task to be tracked
