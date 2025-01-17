@@ -20,6 +20,9 @@ py ./main.py
 
 ## Usage
 ```
+# Specify the name of the JSON output file
+Enter name for JSON file: MyTasks
+
 # Add new task
 add "Buy groceries"
 # Output: Task added successfully (ID: 1)
